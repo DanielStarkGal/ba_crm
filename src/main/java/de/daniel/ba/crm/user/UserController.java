@@ -2,6 +2,7 @@ package de.daniel.ba.crm.user;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.daniel.ba.archunit.INotAllowedCall;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -20,6 +21,12 @@ public class UserController {
     private final UserRepository service;
     private final UserNumberGenerator generator;
     private final ObjectMapper mapper = new ObjectMapper();
+    private  INotAllowedCall notAllowedCall;
+
+    public  void A(){
+        notAllowedCall.allowed();
+        notAllowedCall.notAllowed();
+    }
 
     public UserController(UserRepository UserRepository, UserNumberGenerator generator) {
         this.service = UserRepository;
@@ -56,6 +63,7 @@ public class UserController {
     public User create(@RequestBody User resource) {
         resource.setUserNumber(generator.generate());
         User savedResource = service.save(resource);
+
         return savedResource;
     }
 
