@@ -21,16 +21,18 @@ public class UserController {
     private final UserRepository service;
     private final UserNumberGenerator generator;
     private final ObjectMapper mapper = new ObjectMapper();
-    private  INotAllowedCall notAllowedCall;
+    private final INotAllowedCall notAllowedCall;
 
-    public  void A(){
+    public void A(){
         notAllowedCall.allowed();
-        notAllowedCall.notAllowed();
+        // Reverse Comment bellow to fail Test ArchUnitCallerAllPackagesTest
+        //notAllowedCall.notAllowed();
     }
 
-    public UserController(UserRepository UserRepository, UserNumberGenerator generator) {
+    public UserController(UserRepository UserRepository, UserNumberGenerator generator, INotAllowedCall notAllowedCall) {
         this.service = UserRepository;
         this.generator = generator;
+        this.notAllowedCall = notAllowedCall;
     }
 
     @GetMapping(value = "/{UserNumber}")
